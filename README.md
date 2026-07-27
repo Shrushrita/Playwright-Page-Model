@@ -1,4 +1,4 @@
-# Playwright-RetinaLogik-Test-Review
+# Playwright RetinaLogik Test Review
 
 Playwright automation for the RetinaLogik web portal (dev/test environments), built around the
 Page Object Model, config-driven environments/roles, and a stepwise HTML report with
