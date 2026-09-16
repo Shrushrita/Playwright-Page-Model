@@ -12,43 +12,43 @@ import { BasePage } from './BasePage';
  * If (b), this step is not automatable and must be flagged manual, same as
  * the EMR agent tray-icon steps in Test Case 1.
  */
-export class DevicesPage extends BasePage {
+export class ImageSessionsPage extends BasePage {
   constructor(page: Page) {
     super(page);
   }
 
-  private row(deviceName: string): Locator {
-    return this.page.getByRole('row', { name: deviceName }).or(
-      this.page.getByText(deviceName, { exact: true }).locator('xpath=ancestor::*[self::tr or contains(@class, "device")][1]')
+  private row(ImageSessionName: string): Locator {
+    return this.page.getByRole('row', { name: ImageSessionName }).or(
+      this.page.getByText(ImageSessionName, { exact: true }).locator('xpath=ancestor::*[self::tr or contains(@class, "ImageSession")][1]')
     );
   }
 
   async goto() {
-    await this.page.goto('/devices');
+    await this.page.goto('/ImageSessions');
     await this.assertNotRedirectedToLogin();
   }
 
-  async expectDeviceListed(deviceName: string) {
-    await expect(this.row(deviceName)).toBeVisible();
+  async expectImageSessionListed(ImageSessionName: string) {
+    await expect(this.row(ImageSessionName)).toBeVisible();
   }
 
   /**
-   * Double-clicks a device row and, if a web file chooser appears, sets it
+   * Double-clicks a ImageSession row and, if a web file chooser appears, sets it
    * to `downloadPath`. Throws a descriptive error if no file chooser opens
    * within the timeout, so a native-dialog mismatch fails loudly instead of
    * silently passing.
    */
-  async setDownloadPath(deviceName: string, downloadPath: string) {
+  async setDownloadPath(ImageSessionName: string, downloadPath: string) {
     const fileChooserPromise = this.page
       .waitForEvent('filechooser', { timeout: 5000 })
       .catch(() => null);
 
-    await this.row(deviceName).dblclick();
+    await this.row(ImageSessionName).dblclick();
 
     const chooser = await fileChooserPromise;
     if (!chooser) {
       throw new Error(
-        `No web file chooser appeared after double-clicking "${deviceName}". ` +
+        `No web file chooser appeared after double-clicking "${ImageSessionName}". ` +
           `This likely opens a native OS folder picker, which Playwright cannot drive -- ` +
           `treat this step as manual (see README "Known limitations").`
       );
@@ -56,7 +56,7 @@ export class DevicesPage extends BasePage {
     await chooser.setFiles(downloadPath);
   }
 
-  async expectConfiguredPath(deviceName: string, downloadPath: string) {
-    await expect(this.row(deviceName)).toContainText(downloadPath);
+  async expectConfiguredPath(ImageSessionName: string, downloadPath: string) {
+    await expect(this.row(ImageSessionName)).toContainText(downloadPath);
   }
 }
