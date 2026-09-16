@@ -1,5 +1,5 @@
 {
-  "name": "playwright-retinalogik-test-review",
+  "name": "playwright-Vendor-test-review",
   "version": "1.0.0",
   "description": "First Review of the Software Verification Test Case",
   "main": "index.js",
@@ -14,16 +14,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Shrushrita/Playwright-RetinaLogik-Test-Review.git"
+    "url": "git+https://github.com/Shrushrita/Playwright-Vendor-Test-Review.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/Shrushrita/Playwright-RetinaLogik-Test-Review/issues"
+    "url": "https://github.com/Shrushrita/Playwright-Vendor-Test-Review/issues"
   },
-  "homepage": "https://github.com/Shrushrita/Playwright-RetinaLogik-Test-Review#readme",
+  "homepage": "https://github.com/Shrushrita/Playwright-Vendor-Test-Review#readme",
   "devDependencies": {
     "@playwright/test": "^1.61.1",
     "@types/node": "^26.1.1",
