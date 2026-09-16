@@ -2,7 +2,7 @@
  * Roles map to credential sets in .env. Add a new role by adding an entry
  * here, in .env.example, and in your local .env.
  */
-export type Role = 'clinicUser';
+export type Role = 'AdminUser';
 
 export interface Credentials {
   email: string;
@@ -10,7 +10,7 @@ export interface Credentials {
 }
 
 const ROLE_ENV_KEYS: Record<Role, { email: string; password: string }> = {
-  clinicUser: { email: 'CLINIC_USER_EMAIL', password: 'CLINIC_USER_PASSWORD' },
+  AdminUser: { email: 'Admin_USER_EMAIL', password: 'Admin_USER_PASSWORD' },
 };
 
 function requireEnv(name: string): string {
@@ -23,7 +23,7 @@ function requireEnv(name: string): string {
   return value;
 }
 
-export function getCredentials(role: Role = 'clinicUser'): Credentials {
+export function getCredentials(role: Role = 'AdminUser'): Credentials {
   const keys = ROLE_ENV_KEYS[role];
   if (!keys) {
     throw new Error(`Unknown role "${role}". Known roles: ${Object.keys(ROLE_ENV_KEYS).join(', ')}`);
