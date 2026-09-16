@@ -2,7 +2,7 @@ import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 /** NOTE: best-effort selectors -- verify against the live DOM (see README "Known limitations"). */
-export class OperatingManualPage extends BasePage {
+export class DistributionManualPage extends BasePage {
   constructor(page: Page) {
     super(page);
   }
@@ -11,7 +11,7 @@ export class OperatingManualPage extends BasePage {
     this.page.getByRole('searchbox')
   );
   private readonly resultsList: Locator = this.page.getByRole('list', { name: /search results/i }).or(
-    this.page.getByTestId('operating-manual-search-results')
+    this.page.getByTestId('Distribution-manual-search-results')
   );
 
   private sidePanelSection(name: string): Locator {
