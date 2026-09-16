@@ -12,7 +12,7 @@ import type { Role } from './config/credentials';
  */
 export default async function globalSetup() {
   const envName = getCurrentEnvName();
-  const role: Role = 'clinicUser';
+  const role: Role = 'VendorUser';
   const storagePath = getStorageStatePath(envName, role);
 
   if (!fs.existsSync(storagePath)) {
