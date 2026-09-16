@@ -14,7 +14,7 @@ import { LoginPage } from '../../pages/LoginPage';
  * session to disk so every other test can reuse it without logging in again.
  */
 const envName = getCurrentEnvName();
-const role: Role = 'clinicUser';
+const role: Role = 'vendorUser';
 
 test(`auth setup: ${envName} / ${role}`, async ({ page }) => {
   test.setTimeout(5 * 60 * 1000); // generous window for a human to solve the CAPTCHA
