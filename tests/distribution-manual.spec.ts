@@ -40,9 +40,9 @@ test.describe('Test Case 3: distribution manual (Help)', () => {
       await distributionManualPage.expectResultsContain('controller');
     });
 
-    await step('Search by description "add comment": matching sections are listed', async () => {
-      await distributionManualPage.search('add comment');
-      await distributionManualPage.expectResultsContain('add comment');
+    await step('Search by description "add note": matching sections are listed', async () => {
+      await distributionManualPage.search('add note');
+      await distributionManualPage.expectResultsContain('add note');
     });
   });
 });
