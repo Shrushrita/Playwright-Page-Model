@@ -77,15 +77,15 @@ pages/
   HomePage.ts             Home page: device warning, countdown, nav
   ImagesPage.ts          Images list + per-device download path configuration
   TestSessionsPage.ts         TestSessions list + "Add" entry point
-  AddPatientModal.ts      Add Patient modal fields and Save button
+  AddpagemodelModal.ts      Add pagemodel modal fields and Save button
   OperatingManualPage.ts  Help / operating manual panel, side nav, search
 test-data/
-  TestSessions.ts             Static test data for patient creation
+  TestSessions.ts             Static test data for pagemodel creation
 tests/
   setup/
     auth.setup.ts         One-off, manual, headed login -- see below
   device-configuration.spec.ts   Test Case 1 (web-automatable parts)
-  patient-management.spec.ts     Test Case 2
+  pagemodel-management.spec.ts     Test Case 2
   operating-manual.spec.ts       Test Case 3
 playwright.config.ts             Main config used by `npm test`
 playwright.auth.setup.config.ts  Isolated config used only by `npm run auth:setup`
@@ -97,7 +97,7 @@ global-setup.ts                  Guards against running tests with no cached ses
 ## Prerequisites
 
 - Node.js (LTS)
-- Access to the RetinaLogik dev and/or test portals with a user scoped to the `ImageSession_Admin_Test` clinic
+- Access to the pagemodel dev and/or test portals with a user scoped to the `ImageSession_Admin_Test` pagemodel
 
 ## Setup
 
@@ -180,10 +180,10 @@ TEST_ENV=test npm test
 
 Valid values: `dev`, `test` (see `config/environments.ts`).
 
-Roles are defined in `config/credentials.ts` as a lookup from a role name to a pair of `.env` keys. Only `clinicUser` exists today. To add another role (e.g. a clinic admin):
+Roles are defined in `config/credentials.ts` as a lookup from a role name to a pair of `.env` keys. Only `pagemodelUser` exists today. To add another role (e.g. a pagemodel admin):
 
-1. Add `CLINIC_ADMIN_EMAIL` / `CLINIC_ADMIN_PASSWORD` to `.env.example` and your `.env`.
-2. Add `'clinicAdmin'` to the `Role` union and `ROLE_ENV_KEYS` in `config/credentials.ts`.
+1. Add `pagemodel_ADMIN_EMAIL` / `pagemodel_ADMIN_PASSWORD` to `.env.example` and your `.env`.
+2. Add `'pagemodelAdmin'` to the `Role` union and `ROLE_ENV_KEYS` in `config/credentials.ts`.
 3. Run `npm run auth:setup` for that role (you'll need to parameterize the role in `tests/setup/auth.setup.ts`, currently hardcoded to `AdminUser`) to produce its own cached session file.
 4. Point `storageState` at that role's file (in `playwright.config.ts`, or per-test via `test.use({ storageState: ... })`) for specs that need it.
 
@@ -192,7 +192,7 @@ Roles are defined in `config/credentials.ts` as a lookup from a role name to a p
 | File | Test case | Notes |
 | --- | --- | --- |
 | `tests/device-configuration.spec.ts` | TC1: Device configuration warning, Images page, download path setup, home page countdown | EMR agent tray-icon steps are **not automated** -- see [Known limitations](#known-limitations) |
-| `tests/patient-management.spec.ts` | TC2: Add Patient modal, field-by-field Save-button enablement, save + toast + list | |
+| `tests/pagemodel-management.spec.ts` | TC2: Add pagemodel modal, field-by-field Save-button enablement, save + toast + list | |
 | `tests/operating-manual.spec.ts` | TC3: Help / operating manual navigation and search (by title, tag, description) | |
 
 Every "Log in with a user account..." step in the original test cases is represented in code as
@@ -214,7 +214,7 @@ If full coverage of this flow is required, the options are:
 
 **3. Device "set download path" (Test Case 1).** The test case says double-clicking a device lets you "set the path to your preferred download location." `pages/ImagesPage.ts` implements this assuming it's a standard web file input (Playwright intercepts it via the `filechooser` event). If the real app instead opens a native OS folder-picker dialog outside the browser, Playwright cannot drive it, and `setDownloadPath()` will throw a clear error saying so rather than hanging or silently passing -- treat that step as manual if you hit that error.
 
-**4. Locators are best-effort, not verified against the live DOM.** The CAPTCHA also blocks scripted reconnaissance of the app past the login page, so `HomePage`, `ImagesPage`, `TestSessionsPage`, `AddPatientModal`, and `OperatingManualPage` use resilient, role/label-based locators inferred from the test case wording -- they have **not** been confirmed against the actual rendered pages. Before trusting a real test run:
+**4. Locators are best-effort, not verified against the live DOM.** The CAPTCHA also blocks scripted reconnaissance of the app past the login page, so `HomePage`, `ImagesPage`, `TestSessionsPage`, `AddpagemodelModal`, and `OperatingManualPage` use resilient, role/label-based locators inferred from the test case wording -- they have **not** been confirmed against the actual rendered pages. Before trusting a real test run:
 
 1. Run `npm run auth:setup` once to get a valid session.
 2. Use Playwright's codegen against that session to inspect real selectors and adjust the page    objects if needed:
@@ -234,4 +234,4 @@ If full coverage of this flow is required, the options are:
 - **New environment:** add it to `EnvName` and the environments map in `config/environments.ts`,  plus its base URL to `.env.example`/`.env`.
 - **New role:** see [Switching environments and roles](#switching-environments-and-roles).
 - **CI:** `.github/workflows/playwright.yml` currently runs `npx playwright test` on every push/PR.
-  Because auth requires a human to solve a CAPTCHA, CI needs a pre-generated storage state file supplied as a secret (e.g. decode a `PLAYWRIGHT_AUTH_STATE` repo secret into `playwright/.auth/dev-clinicUser.json` in a step before running tests) rather than running `auth:setup` itself.
+  Because auth requires a human to solve a CAPTCHA, CI needs a pre-generated storage state file supplied as a secret (e.g. decode a `PLAYWRIGHT_AUTH_STATE` repo secret into `playwright/.auth/dev-pagemodelUser.json` in a step before running tests) rather than running `auth:setup` itself.
