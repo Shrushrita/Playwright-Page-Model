@@ -1,16 +1,16 @@
 import { test as base, expect } from '@playwright/test';
 import { HomePage } from '../pages/HomePage';
-import { DevicesPage } from '../pages/DevicesPage';
-import { PatientsPage } from '../pages/PatientsPage';
-import { OperatingManualPage } from '../pages/OperatingManualPage';
+import { vendorPage } from '../pages/vendorPage';
+import { CustomersPage } from '../pages/CustomersPage';
+import { AlignmentManualPage } from '../pages/AlignmentManualPage';
 import { LoginPage } from '../pages/LoginPage';
 
 type Fixtures = {
   loginPage: LoginPage;
   homePage: HomePage;
-  devicesPage: DevicesPage;
-  patientsPage: PatientsPage;
-  operatingManualPage: OperatingManualPage;
+  vendorPage: vendorPage;
+  CustomersPage: CustomersPage;
+  AlignmentManualPage: AlignmentManualPage;
   /**
    * Wraps a block of actions as a named `test.step` (shown in the HTML
    * report) and attaches a full-page screenshot taken right after the step
@@ -26,14 +26,14 @@ export const test = base.extend<Fixtures>({
   homePage: async ({ page }, use) => {
     await use(new HomePage(page));
   },
-  devicesPage: async ({ page }, use) => {
-    await use(new DevicesPage(page));
+  vendorPage: async ({ page }, use) => {
+    await use(new vendorPage(page));
   },
-  patientsPage: async ({ page }, use) => {
-    await use(new PatientsPage(page));
+  CustomersPage: async ({ page }, use) => {
+    await use(new CustomersPage(page));
   },
-  operatingManualPage: async ({ page }, use) => {
-    await use(new OperatingManualPage(page));
+  AlignmentManualPage: async ({ page }, use) => {
+    await use(new AlignmentManualPage(page));
   },
   step: async ({ page }, use, testInfo) => {
     await use(async (title, action) => {
