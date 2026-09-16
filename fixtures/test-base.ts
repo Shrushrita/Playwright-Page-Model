@@ -1,6 +1,6 @@
 import { test as base, expect } from '@playwright/test';
 import { HomePage } from '../pages/HomePage';
-import { vendorPage } from '../pages/vendorPage';
+import { ImageSessionPage } from '../pages/ImageSessionPage';
 import { CustomersPage } from '../pages/CustomersPage';
 import { AlignmentManualPage } from '../pages/AlignmentManualPage';
 import { LoginPage } from '../pages/LoginPage';
