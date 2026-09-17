@@ -191,7 +191,7 @@ Roles are defined in `config/credentials.ts` as a lookup from a role name to a p
 
 | File | Test case | Notes |
 | --- | --- | --- |
-| `tests/device-configuration.spec.ts` | TC1: Device configuration warning, Images page, download path setup, home page countdown | EMR agent tray-icon steps are **not automated** -- see [Known limitations](#known-limitations) |
+| `tests/device-configuration.spec.ts` | TC1: Device configuration warning, Images page, download path setup, home page countdown | DBT agent tray-icon steps are **not automated** -- see [Known limitations](#known-limitations) |
 | `tests/pagemodel-management.spec.ts` | TC2: Add pagemodel modal, field-by-field Save-button enablement, save + toast + list | |
 | `tests/operating-manual.spec.ts` | TC3: Help / operating manual navigation and search (by title, tag, description) | |
 
@@ -203,13 +203,13 @@ were *not* bounced back to the login page -- see [Authentication](#authenticatio
 
 **1. Login CAPTCHA.** Covered above -- handled via a one-time manual session capture, not scripted.
 
-**2. EMR desktop agent (Test Case 1).** Closing the EMR agent window, the system tray icon it leaves behind, and double-clicking that tray icon are native Windows/desktop interactions.
+**2. DBT desktop agent (Test Case 1).** Closing the DBT agent window, the system tray icon it leaves behind, and double-clicking that tray icon are native Windows/desktop interactions.
 Playwright automates browser pages (and Electron apps specifically, via a dedicated API) -- it has no way to drive an arbitrary application's system tray. These steps are marked with
 `test.fixme(...)` in `device-configuration.spec.ts` with the manual verification steps written out in a comment, rather than faked as passing.
 
 If full coverage of this flow is required, the options are:
 
-- If the EMR agent is itself an Electron app, Playwright's Electron API (`_electron.launch(...)`) can drive its window (not its tray icon) -- would need the app's executable path.
+- If the DBT agent is itself an Electron app, Playwright's Electron API (`_electron.launch(...)`) can drive its window (not its tray icon) -- would need the app's executable path.
 - Otherwise, a Windows UI-automation tool (e.g. WinAppDriver, or a PowerShell/AutoIt script) run alongside Playwright, orchestrated from the same test.
 
 **3. Device "set download path" (Test Case 1).** The test case says double-clicking a device lets you "set the path to your preferred download location." `pages/ImagesPage.ts` implements this assuming it's a standard web file input (Playwright intercepts it via the `filechooser` event). If the real app instead opens a native OS folder-picker dialog outside the browser, Playwright cannot drive it, and `setDownloadPath()` will throw a clear error saying so rather than hanging or silently passing -- treat that step as manual if you hit that error.
